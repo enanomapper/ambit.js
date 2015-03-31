@@ -29,3 +29,43 @@ Ambit.Substance.prototype.info = function(uri, callback) {
 		}
 	});
 }
+
+Ambit.Substance.prototype.summary = function(uri, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: uri + "/studysummary",
+                dataType: 'json',
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+
+Ambit.Substance.prototype.composition = function(uri, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: uri + "/composition",
+                dataType: 'json',
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Ambit.Substance.prototype.compositionAsList = function(uri, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: uri + "/structures",
+                dataType: 'json',
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
