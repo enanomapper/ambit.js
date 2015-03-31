@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Copyright (c) 2015  Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+-->
+<head>
+  <title>AMBIT.js</title>
+  <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="lib/purl.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="src/ambit.js"></script>
+  <script type="text/javascript" src="src/Substance.js"></script>
+
+  <script type="text/javascript">
+    var workload = 0;
+  </script>
+
+</head>
+
+<body>
+  <h3>All substances from <a href="www.beilstein-journals.org/bjnano/">Beilstein Journal of Nanotechnology</a></h3>
+  <p><a href="https://twitter.com/10705013/status/582269153920315392">Idea</a> by Nina Jeliazkova.</p>
+  <p><div id="workload"></div></p>
+  <p><table id="table"></table></p>
+  <h3>JSON reply</h3>
+  <p><div id="json">Nothing yet</div></p>
+  <script type="text/javascript">
+var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
+
+var processSubstance = function(success, status, response){
+  document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
+  var size;
+  for (i=0;i<response.study.length;i++) {
+    citation = response.study[i].citation
+    if (citation.owner != "NA" && citation.owner != null && citation.year > 0) {
+      uuid = response.study[i].owner.substance.uuid
+      doi = response.study[i].citation.title
+      document.getElementById("table").innerHTML +=
+        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "\">" + uuid +
+        "</a></td><td>" + response.study[i].protocol.endpoint +
+        "</td><td><b>" + response.study[i].citation.year +
+        "</b></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + response.study[i].citation.owner +
+        "</a></td></tr>";
+    }
+  }
+  workload = workload - 1;
+  if (workload > 0) {
+    document.getElementById("workload").innerHTML = "" + workload + " still to load";
+  } else if (workload == 0) {
+    document.getElementById("workload").innerHTML = "all done";
+  }
+};
+
+var processList = function(success, status, response){
+  for (i=0;i<response.substance.length;i++) {
+    var substance = response.substance[i]
+    searcher.info(substance.URI, processSubstance);
+    workload = workload + 1;
+    document.getElementById("workload").innerHTML = "" + workload;
+  }
+};
+searcher.search("10.3762/bjnano", "citation", processList);
+  </script>
+</body>
+</html>
+
