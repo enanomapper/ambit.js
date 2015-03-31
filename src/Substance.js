@@ -29,6 +29,27 @@ Ambit.Substance.prototype.list = function(callback) {
 }
 
 /**
+ * Search for substances.
+ *
+ * @param {string} query - The search query
+ * @param {string} type - The search type (e.g. name, citation, ownerName)
+ * @param {requestCallback} callback - Function that will be called with the result.
+ * @method
+ */
+Ambit.Substance.prototype.search = function(query, type, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/substance",
+                dataType: 'json',
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+/**
  * Returns information about a single substance.
  *
  * @param {requestCallback} callback - Function that will be called with the result.
