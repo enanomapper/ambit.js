@@ -29,5 +29,12 @@ Of course, this part requires a properly set up HTML page with an element whose 
 ## Dependencies
 The library depends [jquery](http://jquery.com/)-1.9.1.min.js	and purl.js. It can be mashed up with [d3.js](http://d3js.org/) which is also included in the lib/ folder.
 
+## Documentation
+Documentation is generated with JSDoc:
+
+    npm install jsdoc@"<=3.3.0" # if needed
+    sh merge_js.sh
+    ./node_modules/.bin/jsdoc src/ambit_dist.js
+
 ## Inspiration
 This library is based on the ideas from Ian Dunlop whom developed [ops.js](https://github.com/openphacts/ops.js) for Open PHACTS.
