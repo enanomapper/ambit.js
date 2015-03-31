@@ -52,6 +52,7 @@ Ambit.Substance.prototype.search = function(query, type, callback) {
 /**
  * Returns information about a single substance.
  *
+ * @param {string} uri - The URI for the substance
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
@@ -71,6 +72,7 @@ Ambit.Substance.prototype.info = function(uri, callback) {
 /**
  * Summarizes the information about a single substance.
  *
+ * @param {string} uri - The URI for the substance
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
@@ -90,6 +92,7 @@ Ambit.Substance.prototype.summary = function(uri, callback) {
 /**
  * Returns the chemical composition of the substance.
  *
+ * @param {string} uri - The URI for the substance
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
@@ -109,6 +112,7 @@ Ambit.Substance.prototype.composition = function(uri, callback) {
 /**
  * Returns the chemical composition of the substance as a list.
  *
+ * @param {string} uri - The URI for the substance
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
