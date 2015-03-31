@@ -18,7 +18,7 @@ Ambit.Substance = function(baseURL) {
 Ambit.Substance.prototype.list = function(callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
-                dataType: 'json',
+		dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
 		},
@@ -37,9 +37,13 @@ Ambit.Substance.prototype.list = function(callback) {
  * @method
  */
 Ambit.Substance.prototype.search = function(query, type, callback) {
+	params = {};
+	params['search'] = query;
+	params['type'] = type;
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
-                dataType: 'json',
+		dataType: 'json',
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
 		},
