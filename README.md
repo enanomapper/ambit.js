@@ -1,6 +1,8 @@
 # ambit.js
 JavaScript library for interaction with AMBIT instances.
 
+The API documentation can be found [here](http://enanomapper.github.io/ambit.js/api/).
+
 ## Example use
 
 Besides the steps below, full examples are found on [here](http://enanomapper.github.io/ambit.js/).
