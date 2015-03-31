@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Class: Bundle</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Class: Bundle</h1>
 
     
 
@@ -29,7 +29,9 @@
 <header>
     
         <h2>
+            <span class="ancestors"><a href="Ambit.html">Ambit</a>.</span>
         
+        Bundle
         </h2>
         
     
@@ -40,7 +42,73 @@
     
         
 
+    
+
+    <h4 class="name" id="Bundle"><span class="type-signature"></span>new Bundle<span class="signature">(baseURL)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
         
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>baseURL</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL for the AMBIT API</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
 
 
 <dl class="details">
@@ -62,13 +130,28 @@
     
 
     
-
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Egon Willighagen</li>
+        </ul>
+    </dd>
     
 
     
 
     
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li><a href="http://opensource.org/licenses/MIT">MIT</a></li></ul></dd>
+    
 
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ambit_dist.js.html">ambit_dist.js</a>, <a href="ambit_dist.js.html#line162">line 162</a>
+    </li></ul></dd>
     
 
     
@@ -79,7 +162,20 @@
 </dl>
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     </div>
 
@@ -96,23 +192,21 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         
-                
+            
 
     
 
-    <h4 class="name" id="requestCallback"><span class="type-signature"></span>requestCallback<span class="signature">(success, status, response)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="list"><span class="type-signature"></span>list<span class="signature">(callback)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    General callback for any ambit.js API call.
+    Lists all the substances.
 </div>
 
 
@@ -148,13 +242,13 @@
 
         <tr>
             
-                <td class="name"><code>success</code></td>
+                <td class="name"><code>callback</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type"><a href="global.html#requestCallback">requestCallback</a></span>
 
 
             
@@ -164,53 +258,7 @@
 
             
 
-            <td class="description last">True or False, indicating the outcome of the API call</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>status</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">HTTP status code returned by the server</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>response</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Response message in JSON format</td>
+            <td class="description last">Function that will be called with the result.</td>
         </tr>
 
     
@@ -251,7 +299,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ambit_dist.js.html">ambit_dist.js</a>, <a href="ambit_dist.js.html#line13">line 13</a>
+        <a href="ambit_dist.js.html">ambit_dist.js</a>, <a href="ambit_dist.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -277,7 +325,9 @@
 
 
 
-            
+        
+    
+
     
 
     
