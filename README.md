@@ -34,7 +34,7 @@ Documentation is generated with JSDoc:
 
     npm install jsdoc@"<=3.3.0" # if needed
     sh merge_js.sh
-    ./node_modules/.bin/jsdoc src/ambit_dist.js
+    ./node_modules/.bin/jsdoc -d api src/ambit_dist.js
 
 ## Inspiration
 This library is based on the ideas from Ian Dunlop whom developed [ops.js](https://github.com/openphacts/ops.js) for Open PHACTS.
