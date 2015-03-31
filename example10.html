@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+
+Copyright (c) 2015  Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+-->
+<head>
+  <title>AMBIT.js</title>
+  <script src="lib/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="lib/purl.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="src/ambit.js"></script>
+  <script type="text/javascript" src="src/Substance.js"></script>
+  <script src="lib/d3.v3.min.js" charset="utf-8"></script>
+
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+
+  <script type="text/javascript">
+    var sizeVals = [];
+    var zetaVals = [];
+    var workload = 0;
+    var measurementCount = 0;
+  </script>
+</head>
+
+<body>
+  <h3>ENM zeta potentials versus particle size</h3>
+  <p><div class="chart"></div></p>
+  <p><div id="workload"></div></p>
+  <h3>JSON reply</h3>
+  <p><div id="json">Nothing yet</div></p>
+  <script type="text/javascript">
+var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
+
+var plot = function(sizeValues, zetaValues, count) {
+  d3.select(".chart").innerHTML = "Plotting..."
+  
+  console.log("values: ")
+  console.log(sizeValues)
+  console.log("values: ")
+  console.log(zetaValues)
+  console.log("count: ")
+  console.log(count)
+
+  data = []
+  for (j=0;j<count;j++) {
+    data.push({
+     size: sizeValues[j],
+     zeta: zetaValues[j]
+    });
+  }
+  
+  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+  var x = d3.scale.linear()
+    .range([0, width]);
+
+  var y = d3.scale.linear()
+    .range([height, 0]);
+
+  var color = d3.scale.category10();
+
+  var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+  var svg = d3.select(".chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  x.domain(d3.extent(sizeValues, function(d) { return d; })).nice();
+  y.domain(d3.extent(zetaValues, function(d) { return d; })).nice();
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Size (nm)");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Zeta Potential (mV)")
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.size); })
+      .attr("cy", function(d) { return y(d.zeta); })
+      .style("fill", function(d) { return "red"; });
+
+}
+
+var processSubstance = function(success, status, response){
+  for (i=0;i<response.study.length;i++) {
+    var study = response.study[i]
+    value = null
+    zeta = null
+    for (j=0;j<study.effects.length;j++) {
+      var effect = study.effects[j]
+      // console.log("effect: " + effect)
+      if (effect.endpoint == "ZETA POTENTIAL") {
+        document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
+        unit = effect.result.unit
+        value = effect.result.loValue
+        ph = effect.conditions.pH
+        if (unit == "mV" && value != null) {
+          zeta = value
+        }
+      } else if (effect.endpoint == "PARTICLE SIZE") {
+        document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
+        unit = effect.result.unit
+        value = effect.result.loValue
+        if (unit == "nm" && value != null && value < 200) {
+          size = value
+        }
+      }
+    }
+    if (size != null && zeta != null) {
+      sizeVals[measurementCount] = size;
+      zetaVals[measurementCount] = zeta;
+      measurementCount = measurementCount + 1;
+    }
+  }
+  workload = workload - 1;
+  if (workload > 0) {
+    document.getElementById("workload").innerHTML = "" + workload + " still to load";
+  } else if (workload == 0) {
+    document.getElementById("workload").innerHTML = "";
+    plot(sizeVals, zetaVals, measurementCount);
+  }
+};
+
+var processList = function(success, status, response){
+  document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
+  for (i=0;i<response.substance.length;i++) {
+    var substance = response.substance[i]
+    if (substance.ownerName == "NanoWiki") {
+      // console.log("Processing " + substance.URI)
+      searcher.info(substance.URI, processSubstance);
+      workload = workload + 1;
+      document.getElementById("workload").innerHTML = "" + workload;
+    }
+  }
+};
+searcher.list(processList);
+  </script>
+</body>
+</html>
+
