@@ -45,6 +45,7 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
 
   <!-- dynamically create a table with type information -->
   <script type="text/javascript">
+
 var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
 var callback = function(success, status, response){
   d3.select(".json").html(JSON.stringify(response, undefined, 2));
@@ -71,7 +72,9 @@ var callback = function(success, status, response){
 
   // now convert the unit counts to data
   for (key in unitCounts) {
-    data.push({name:key, value:unitCounts[key]})
+    keyStr = key
+    if (keyStr.length > 16) keyStr = keyStr.substring(0,14) + ".."
+    data.push({name:keyStr, value:unitCounts[key]})
   }
 
   var width = 500,
