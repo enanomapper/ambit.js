@@ -1,7 +1,7 @@
 # ambit.js
-JavaScript library for interaction with AMBIT instances.
+JavaScript library for interaction with AMBIT instances. The API documentation can be found [here](http://enanomapper.github.io/ambit.js/api/).
 
-The API documentation can be found [here](http://enanomapper.github.io/ambit.js/api/).
+The latest release: [Version 0.0.2](https://github.com/enanomapper/ambit.js/releases/tag/v0.0.2) [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.16517.svg)](http://dx.doi.org/10.5281/zenodo.16517)
 
 ## Example use
 
@@ -40,3 +40,7 @@ Documentation is generated with JSDoc:
 
 ## Inspiration
 This library is based on the ideas from Ian Dunlop whom developed [ops.js](https://github.com/openphacts/ops.js) for Open PHACTS.
+
+## All releases
+
+* 2015-03-31 [Version 0.0.2](https://github.com/enanomapper/ambit.js/releases/tag/v0.0.2) [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.16517.svg)](http://dx.doi.org/10.5281/zenodo.16517)
