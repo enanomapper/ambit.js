@@ -103,7 +103,6 @@ body {
 var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
 
 var plot = function(where, values) {
-d3.select(where).innerHTML = "Plotting..."
 
 // Formatters for counts and times (converting numbers to Dates).
 var formatCount = d3.format(",.0f");
@@ -133,7 +132,7 @@ var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-var svg = d3.select(".chart").append("svg")
+var svg = d3.select(where).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
