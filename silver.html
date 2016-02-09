@@ -115,7 +115,7 @@ console.log("values: ")
 console.log(values)
 
 var x = d3.scale.linear()
-    .domain([0, Math.max.apply(null, values)])
+    .domain([Math.min.apply(null, values), Math.max.apply(null, values)])
     .range([0, width]);
 
 // Generate a histogram using twenty uniformly-spaced bins.
@@ -146,7 +146,7 @@ var bar = svg.selectAll(".bar")
 
 bar.append("rect")
     .attr("x", 1)
-    .attr("width", x(data[0].dx) - 1)
+    .attr("width", x(data[0].x  + data[0].dx) - 1) // see http://stackoverflow.com/questions/15388481/d3-js-histogram-with-positive-and-negative-values
     .attr("height", function(d) { return height - y(d.y); });
 
 bar.append("text")
