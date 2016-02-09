@@ -40,6 +40,37 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
   <script type="text/javascript">
     var workload = 0;
   </script>
+
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+
+  <script type="text/javascript">
+    var workload = 0;
+    var sizesVal = [];
+    var sizeCount = 0;
+    var zetasVal = [];
+    var zetaCount = 0;
+  </script>
 </head>
 
 <body>
@@ -69,8 +100,8 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
 
 var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
 
-var plot = function(values) {
-d3.select(".sizes").innerHTML = "Plotting..."
+var plot = function(where, values) {
+d3.select(where).innerHTML = "Plotting..."
 
 // Formatters for counts and times (converting numbers to Dates).
 var formatCount = d3.format(",.0f");
@@ -145,6 +176,7 @@ var processSubstance = function(success, status, response){
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";
     }
+    var study = response.study[i]
     for (j=0;j<study.effects.length;j++) {
       var effect = study.effects[j]
       // console.log("effect: " + effect)
@@ -159,6 +191,15 @@ var processSubstance = function(success, status, response){
           }
         }
       }
+      if (effect.endpoint == "ZETA POTENTIAL") {
+        if (effect.result.unit == "mV") {
+          if (effect.result.loValue) {
+            zeta = effect.result.loValue;
+            zetasVal[zetaCount]  = zeta;
+            zetaCount = zetaCount + 1;
+          }
+        }
+      }
     }
   }
   workload = workload - 1;
@@ -166,7 +207,7 @@ var processSubstance = function(success, status, response){
     document.getElementById("workload").innerHTML = "" + workload + " still to load";
   } else if (workload == 0) {
     document.getElementById("workload").innerHTML = "all done";
-    plot(sizesVal);
+    plot(".sizes", sizesVal);
   }
 };
 
