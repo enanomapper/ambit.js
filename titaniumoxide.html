@@ -69,6 +69,68 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
 
 var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
 
+var plot = function(values) {
+d3.select(".sizes").innerHTML = "Plotting..."
+
+// Formatters for counts and times (converting numbers to Dates).
+var formatCount = d3.format(",.0f");
+
+var margin = {top: 10, right: 30, bottom: 30, left: 30},
+    width = 560 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+console.log("values: ")
+console.log(values)
+
+var x = d3.scale.linear()
+    .domain([0, Math.max.apply(null, values)])
+    .range([0, width]);
+
+// Generate a histogram using twenty uniformly-spaced bins.
+var data = d3.layout.histogram()
+    .bins(x.ticks(35))
+    (values);
+    console.log("data: " + data)
+
+var y = d3.scale.linear()
+    .domain([0, d3.max(data, function(d) { return d.y; })])
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var svg = d3.select(".chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var bar = svg.selectAll(".bar")
+    .data(data)
+  .enter().append("g")
+    .attr("class", "bar")
+    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+bar.append("rect")
+    .attr("x", 1)
+    .attr("width", x(data[0].dx) - 1)
+    .attr("height", function(d) { return height - y(d.y); });
+
+bar.append("text")
+    .attr("dy", ".75em")
+    .attr("y", 6)
+    .attr("x", x(data[0].dx) / 2)
+    .attr("text-anchor", "middle")
+    .text(function(d) { return formatCount(d.y); });
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+      console.log("Plotting done.")
+}
+
 var processSubstance = function(success, status, response){
   document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
   var size;
@@ -82,6 +144,21 @@ var processSubstance = function(success, status, response){
         "</a></td><td>" + response.study[i].protocol.endpoint +
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";
+    }
+    for (j=0;j<study.effects.length;j++) {
+      var effect = study.effects[j]
+      // console.log("effect: " + effect)
+      if (effect.endpoint == "PARTICLE SIZE") {
+        if (effect.result.unit == "nm") {
+          if (effect.result.loValue) {
+            size = effect.result.loValue;
+            if (size < 500) {
+              sizesVal[sizeCount]  = size;
+              sizeCount = sizeCount + 1;
+            }
+          }
+        }
+      }
     }
   }
   workload = workload - 1;
@@ -128,8 +205,8 @@ var processList = function(success, status, response){
     data.push({name:keyStr, value:unitCounts[key]})
   }
 
-  var width = 500,
-    height = 600,
+  var width = 180,
+    height = 200,
     radius = Math.min(width, height) / 2;
 
   var color = d3.scale.category20();
