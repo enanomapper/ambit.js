@@ -53,6 +53,9 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
   </tr>
   </table>
 
+  <h3>JSON reply</h3>
+  <pre><div class="json">Pending...</div></pre>
+
   <!-- dynamically create a table with type information -->
   <script type="text/javascript">
 
@@ -122,7 +125,7 @@ console.log("Plotting done.")
 }
 
 var processSize = function(success, status, response){
-  document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
+  // document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
   var size;
   for (i=0;i<response.study.length;i++) {
     var study = response.study[i]
@@ -155,7 +158,10 @@ var processSize = function(success, status, response){
 };
 
 var searchCallback = function(success, status, response){
-  // d3.select(".json").html(JSON.stringify(response, undefined, 2));
+  d3.select(".json").html(JSON.stringify(response, undefined, 2));
+  console.log("success: " + success)
+  console.log("status: " + status)
+  console.log("response: " + response)
 
   var data = [];
 
@@ -233,7 +239,7 @@ var searchCallback = function(success, status, response){
 
 };
 
-searcher.search("name", "TiO2", searchCallback);
+searcher.search("TiO2", "name", searchCallback);
   </script>
 </body>
 </html>
