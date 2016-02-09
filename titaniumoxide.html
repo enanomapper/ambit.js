@@ -80,7 +80,9 @@ body {
   <tr>
     <td width="400px">
       <h3>Sizes</h3>
-      <p><div class="sizes"></div></p>
+      <p><div class="sizes"></div></p><br />
+      <h3>Zeta Potentials</h3>
+      <p><div class="zetas"></div></p>
     </td>
     <td width="200px">
       <h3>Providers</h3>
@@ -208,6 +210,7 @@ var processSubstance = function(success, status, response){
   } else if (workload == 0) {
     document.getElementById("workload").innerHTML = "all done";
     plot(".sizes", sizesVal);
+    plot(".zetas", zetasVal);
   }
 };
 
