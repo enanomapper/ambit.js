@@ -51,7 +51,7 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
       <h3>Sizes</h3>
       <p><div class="sizes"></div></p>
     </td>
-    <td width="400px">
+    <td width="200px">
       <h3>Providers</h3>
       <p><div class="chart"></div></p>
     </td>
@@ -166,6 +166,7 @@ var processSubstance = function(success, status, response){
     document.getElementById("workload").innerHTML = "" + workload + " still to load";
   } else if (workload == 0) {
     document.getElementById("workload").innerHTML = "all done";
+    plot(sizesVal);
   }
 };
 
