@@ -36,7 +36,7 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
   <script type="text/javascript" src="src/ambit.js"></script>
   <script type="text/javascript" src="src/Substance.js"></script>
 
-  <script src="lib/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="lib/d3.v3.min.js" charset="utf-8"></script>
   <script type="text/javascript">
     var workload = 0;
   </script>
@@ -70,6 +70,8 @@ body {
     var sizeCount = 0;
     var zetasVal = [];
     var zetaCount = 0;
+
+    var materialsNames = {};
   </script>
 </head>
 
@@ -171,8 +173,9 @@ var processSubstance = function(success, status, response){
     if (citation.owner != "NA" && citation.owner != null && citation.owner != "MODENA") {
       uuid = response.study[i].owner.substance.uuid
       doi = response.study[i].citation.title
+      uri = "https://apps.ideaconsult.net/enanomapper/substance/" + uuid
       document.getElementById("table").innerHTML +=
-        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + uuid +
+        "<tr><td><a href=\"" + uri + "/study\">" + materialNames[uri] +
         "</a></td><td>" + response.study[i].protocol.endpoint +
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";
@@ -216,6 +219,7 @@ var processSubstance = function(success, status, response){
 var processList = function(success, status, response){
   for (i=0;i<response.substance.length;i++) {
     var substance = response.substance[i]
+    materialsNames[uri] = substance.name;
     searcher.info(substance.URI, processSubstance);
     workload = workload + 1;
     document.getElementById("workload").innerHTML = "" + workload;
