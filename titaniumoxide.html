@@ -169,15 +169,23 @@ var processSubstance = function(success, status, response){
   document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
   var size;
   for (i=0;i<response.study.length;i++) {
-    citation = response.study[i].citation
-    if (citation.owner != "NA" && citation.owner != null && citation.owner != "MODENA") {
-      uuid = response.study[i].owner.substance.uuid
-      doi = response.study[i].citation.title
-      document.getElementById("table").innerHTML +=
+    substance = response.study[i]
+    owner = substance.owner
+    if (owner.company != null && owner.company.name != "MODENA") {
+      uuid = owner.company.uuid
+      name = owner.company.name
+      content =
         "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + materialNames[uuid] +
-        "</a></td><td>" + response.study[i].protocol.endpoint +
-        "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
-        "</a></td></tr>";
+        "</a></td><td>" + substance.protocol.endpoint +
+        "</td></td><td><a href=\"https://apps.ideaconsult.net/enanomapper/substanceowner/" + uuid + "\">" + name +
+        "</a></td><td>"
+      if (substance.citation != null && substance.citation.title != null) {
+        doiURI = substance.citation.title
+        content += "<a href=\"" + doiURI + "\">" + doiURI +
+        "</a></td>"
+      }
+      content += "</tr>";
+      document.getElementById("table").innerHTML += content;
     }
     var study = response.study[i]
     for (j=0;j<study.effects.length;j++) {
