@@ -172,7 +172,7 @@ var processSubstance = function(success, status, response){
       uuid = response.study[i].owner.substance.uuid
       doi = response.study[i].citation.title
       document.getElementById("table").innerHTML +=
-        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "\">" + uuid +
+        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + uuid +
         "</a></td><td>" + response.study[i].protocol.endpoint +
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";
