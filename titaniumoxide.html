@@ -71,7 +71,7 @@ body {
     var zetasVal = [];
     var zetaCount = 0;
 
-    var materialsNames = {};
+    var materialNames = {};
   </script>
 </head>
 
@@ -219,7 +219,7 @@ var processList = function(success, status, response){
   for (i=0;i<response.substance.length;i++) {
     var substance = response.substance[i]
     uuid = substance.i5uuid
-    materialsNames[uuid] = substance.name;
+    materialNames[uuid] = substance.name;
     searcher.info(substance.URI, processSubstance);
     workload = workload + 1;
     document.getElementById("workload").innerHTML = "" + workload;
