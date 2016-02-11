@@ -173,9 +173,8 @@ var processSubstance = function(success, status, response){
     if (citation.owner != "NA" && citation.owner != null && citation.owner != "MODENA") {
       uuid = response.study[i].owner.substance.uuid
       doi = response.study[i].citation.title
-      uri = "https://apps.ideaconsult.net/enanomapper/substance/" + uuid
       document.getElementById("table").innerHTML +=
-        "<tr><td><a href=\"" + uri + "/study\">" + materialNames[uri] +
+        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + materialNames[uuid] +
         "</a></td><td>" + response.study[i].protocol.endpoint +
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";
@@ -219,7 +218,8 @@ var processSubstance = function(success, status, response){
 var processList = function(success, status, response){
   for (i=0;i<response.substance.length;i++) {
     var substance = response.substance[i]
-    materialsNames[uri] = substance.name;
+    uuid = substance.i5uuid
+    materialsNames[uuid] = substance.name;
     searcher.info(substance.URI, processSubstance);
     workload = workload + 1;
     document.getElementById("workload").innerHTML = "" + workload;
