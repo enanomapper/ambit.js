@@ -173,12 +173,14 @@ var processSubstance = function(success, status, response){
     substance = response.study[i]
     owner = substance.owner
     if (owner.company != null && owner.company.name != "MODENA") {
-      uuid = owner.company.uuid
+      uuid = substance.owner.substance.uuid
+      uuidOwner = owner.company.uuid
+      uuidOwner = owner.company.uuid
       name = owner.company.name
       content =
         "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + materialNames[uuid] +
         "</a></td><td>" + substance.protocol.endpoint +
-        "</td></td><td><a href=\"https://apps.ideaconsult.net/enanomapper/substanceowner/" + uuid + "\">" + name +
+        "</td></td><td><a href=\"https://apps.ideaconsult.net/enanomapper/substanceowner/" + uuidOwner + "\">" + name +
         "</a></td><td>"
       if (substance.citation != null && substance.citation.title != null) {
         doiURI = substance.citation.title
