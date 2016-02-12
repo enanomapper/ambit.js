@@ -36,7 +36,7 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
   <script type="text/javascript" src="src/ambit.js"></script>
   <script type="text/javascript" src="src/Substance.js"></script>
 
-  <script src="lib/d3.v3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="lib/d3.v3.min.js" charset="utf-8"></script>
   <script type="text/javascript">
     var workload = 0;
   </script>
@@ -70,11 +70,14 @@ body {
     var sizeCount = 0;
     var zetasVal = [];
     var zetaCount = 0;
+
+    var materialNames = {};
   </script>
 </head>
 
 <body>
   <h1>Silver</h1>
+  <p><div id="summary"></div></p>
   <p><div id="workload"></div></p>
   <table>
   <tr>
@@ -167,15 +170,25 @@ var processSubstance = function(success, status, response){
   document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
   var size;
   for (i=0;i<response.study.length;i++) {
-    citation = response.study[i].citation
-    if (citation.owner != "NA" && citation.owner != null && citation.owner != "MODENA") {
-      uuid = response.study[i].owner.substance.uuid
-      doi = response.study[i].citation.title
-      document.getElementById("table").innerHTML +=
-        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + uuid +
-        "</a></td><td>" + response.study[i].protocol.endpoint +
-        "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
-        "</a></td></tr>";
+    substance = response.study[i]
+    owner = substance.owner
+    if (owner.company != null && owner.company.name != "MODENA") {
+      uuid = substance.owner.substance.uuid
+      uuidOwner = owner.company.uuid
+      uuidOwner = owner.company.uuid
+      name = owner.company.name
+      content =
+        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "/study\">" + materialNames[uuid] +
+        "</a></td><td>" + substance.protocol.endpoint +
+        "</td></td><td><a href=\"https://apps.ideaconsult.net/enanomapper/substanceowner/" + uuidOwner + "\">" + name +
+        "</a></td><td>"
+      if (substance.citation != null && substance.citation.title != null) {
+        doiURI = substance.citation.title
+        content += "<a href=\"" + doiURI + "\">" + doiURI +
+        "</a></td>"
+      }
+      content += "</tr>";
+      document.getElementById("table").innerHTML += content;
     }
     var study = response.study[i]
     for (j=0;j<study.effects.length;j++) {
@@ -214,8 +227,12 @@ var processSubstance = function(success, status, response){
 };
 
 var processList = function(success, status, response){
+  document.getElementById("summary").innerHTML =
+    "There are " + response.substance.length + " nanomaterials found."
   for (i=0;i<response.substance.length;i++) {
     var substance = response.substance[i]
+    uuid = substance.i5uuid
+    materialNames[uuid] = substance.name;
     searcher.info(substance.URI, processSubstance);
     workload = workload + 1;
     document.getElementById("workload").innerHTML = "" + workload;
