@@ -14,6 +14,7 @@ Besides the steps below, full examples are found on [here](http://enanomapper.gi
     <script type="text/javascript" src="src/ambit.js"></script>
     <script type="text/javascript" src="src/Substance.js"></script>
     <script type="text/javascript" src="src/Bundle.js"></script>
+    <script type="text/javascript" src="src/Compound.js"></script>
 
 ### Step 2: define the server (JavaScript code)
 
