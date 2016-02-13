@@ -3,7 +3,7 @@
 <html>
 <!--
 
-Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
+Copyright (c) 2013-2015  Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
 
  Permission is hereby granted, free of charge, to any person
  obtaining a copy of this software and associated documentation
@@ -29,41 +29,13 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
 -->
 <head>
   <title>Zinc Oxide</title>
+
   <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="lib/purl.js"></script>
-
-  <!-- include source files here... -->
   <script type="text/javascript" src="src/ambit.js"></script>
   <script type="text/javascript" src="src/Substance.js"></script>
-
   <script type="text/javascript" src="lib/d3.v3.min.js" charset="utf-8"></script>
   <script type="text/javascript" src="helperMethods.js"></script>
-  <script type="text/javascript">
-    var workload = 0;
-  </script>
-
-<style>
-
-body {
-  font: 10px sans-serif;
-}
-
-.bar rect {
-  fill: steelblue;
-  shape-rendering: crispEdges;
-}
-
-.bar text {
-  fill: #fff;
-}
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-</style>
 
   <script type="text/javascript">
     var workload = 0;
@@ -74,6 +46,8 @@ body {
 
     var materialNames = {};
   </script>
+
+  <link rel="stylesheet" type="text/css" href="theme.css">
 </head>
 
 <body>
