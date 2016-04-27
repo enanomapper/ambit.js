@@ -5,20 +5,24 @@
  * @license [MIT]{@link http://opensource.org/licenses/MIT}
  * @author Egon Willighagen
  */
-Ambit.Bundle = function(baseURL) {
+Ambit.Compound = function(baseURL) {
 	this.baseURL = baseURL.replace(/\/$/, "");
 }
 
 /**
- * Lists all the substances.
+ * Search for substances.
  *
+ * @param {string} query - The search query (e.g. TiO2)
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
-Ambit.Bundle.prototype.list = function(callback) {
+Ambit.Compound.prototype.search = function(query, callback) {
+	params = {};
+	params['search'] = query;
 	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/bundle",
+		url: this.baseURL + "/query/compound/search/all",
 		dataType: 'json',
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
 		},
@@ -27,4 +31,3 @@ Ambit.Bundle.prototype.list = function(callback) {
 		}
 	});
 }
-

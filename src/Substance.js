@@ -6,7 +6,7 @@
  * @author Egon Willighagen
  */
 Ambit.Substance = function(baseURL) {
-	this.baseURL = baseURL;
+	this.baseURL = baseURL.replace(/\/$/, "");
 }
 
 /**
@@ -19,6 +19,29 @@ Ambit.Substance.prototype.list = function(callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
 		dataType: 'json',
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+/**
+ * Lists all substances related to the given compound.
+ *
+ * @param {requestCallback} callback - Function that will be called with the result.
+ * @method
+ */
+Ambit.Substance.prototype.listForCompound = function(compound, callback) {
+	params = {};
+	params['compound_uri'] = compound;
+	params['type'] = 'related';
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/substance",
+		dataType: 'json',
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
 		},
