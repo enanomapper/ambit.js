@@ -6,7 +6,7 @@
  * @author Egon Willighagen
  */
 Ambit.Substance = function(baseURL) {
-	this.baseURL = baseURL;
+	this.baseURL = baseURL.replace(/\/$/, "");
 }
 
 /**

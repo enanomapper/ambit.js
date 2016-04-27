@@ -6,7 +6,7 @@
  * @author Egon Willighagen
  */
 Ambit.Bundle = function(baseURL) {
-	this.baseURL = baseURL;
+	this.baseURL = baseURL.replace(/\/$/, "");
 }
 
 /**
