@@ -18,6 +18,7 @@ Ambit.Bundle = function(baseURL) {
 Ambit.Bundle.prototype.list = function(callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/bundle",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
 		dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
