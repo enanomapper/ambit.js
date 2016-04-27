@@ -21,6 +21,7 @@ Ambit.Compound.prototype.search = function(query, callback) {
 	params['search'] = query;
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/query/compound/search/all",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
 		dataType: 'json',
 		data: params,
 		success: function(response, status, request) {

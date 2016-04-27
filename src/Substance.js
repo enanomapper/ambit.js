@@ -18,6 +18,7 @@ Ambit.Substance = function(baseURL) {
 Ambit.Substance.prototype.list = function(callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
 		dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
@@ -40,6 +41,7 @@ Ambit.Substance.prototype.listForCompound = function(compound, callback) {
 	params['type'] = 'related';
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
 		dataType: 'json',
 		data: params,
 		success: function(response, status, request) {
@@ -65,6 +67,7 @@ Ambit.Substance.prototype.search = function(query, type, callback) {
 	params['type'] = type;
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/substance",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
 		dataType: 'json',
 		data: params,
 		success: function(response, status, request) {
@@ -86,6 +89,7 @@ Ambit.Substance.prototype.search = function(query, type, callback) {
 Ambit.Substance.prototype.info = function(uri, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: uri + "/study",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
                 dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
@@ -106,6 +110,7 @@ Ambit.Substance.prototype.info = function(uri, callback) {
 Ambit.Substance.prototype.summary = function(uri, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: uri + "/studysummary",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
                 dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
@@ -126,6 +131,7 @@ Ambit.Substance.prototype.summary = function(uri, callback) {
 Ambit.Substance.prototype.composition = function(uri, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: uri + "/composition",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
                 dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
@@ -146,6 +152,7 @@ Ambit.Substance.prototype.composition = function(uri, callback) {
 Ambit.Substance.prototype.compositionAsList = function(uri, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: uri + "/structures",
+		headers: { 'User-Agent': 'ambit.js (https://github.com/enanomapper/ambit.js/)' },
                 dataType: 'json',
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response);
