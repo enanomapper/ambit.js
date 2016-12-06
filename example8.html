@@ -50,7 +50,7 @@ Copyright (c) 2015  Egon Willighagen <egon.willighagen@maastrichtuniversity.nl>
   <h3>JSON reply</h3>
   <p><div id="json">Nothing yet</div></p>
   <script type="text/javascript">
-var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
+var searcher = new Ambit.Substance("https://data.enanomapper.net");  
 
 var processSubstance = function(success, status, response){
   document.getElementById("json").innerHTML = "<pre>" + JSON.stringify(response, null, '  ') + "</pre>";
@@ -61,7 +61,7 @@ var processSubstance = function(success, status, response){
       uuid = response.study[i].owner.substance.uuid
       doi = response.study[i].citation.title
       document.getElementById("table").innerHTML +=
-        "<tr><td><a href=\"https://apps.ideaconsult.net/enanomapper/substance/" + uuid + "\">" + uuid +
+        "<tr><td><a href=\"https://data.enanomapper.net/substance/" + uuid + "\">" + uuid +
         "</a></td><td>" + response.study[i].protocol.endpoint +
         "</td></td><td><a href=\"http://dx.doi.org/" + doi + "\">" + citation.owner +
         "</a></td></tr>";

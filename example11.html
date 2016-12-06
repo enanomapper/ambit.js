@@ -45,7 +45,7 @@ Copyright (c) 2013-2014  Egon Willighagen <egon.willighagen@maastrichtuniversity
 
   <!-- dynamically create a table with type information -->
   <script type="text/javascript">
-var searcher = new Ambit.Substance("https://apps.ideaconsult.net/enanomapper");  
+var searcher = new Ambit.Substance("https://data.enanomapper.net");  
 var callback = function(success, status, response){
   d3.select(".json").html(JSON.stringify(response, undefined, 2));
 
@@ -118,7 +118,7 @@ var callback = function(success, status, response){
           if (d.data.value > 10) {
               tmpName = d.data.name;
               if (tmpName.startsWith("NPO_")) {
-                  url = "https://apps.ideaconsult.net/enanomapper/ontobucket?type=label&qe=false&media=application%2Fjson&search=" + tmpName;
+                  url = "https://data.enanomapper.net/ontobucket?type=label&qe=false&media=application%2Fjson&search=" + tmpName;
 	          console.log(url);
 	          $.ajaxSetup({async:false});
                   var conceptWikiSearcher = $.get(url);
